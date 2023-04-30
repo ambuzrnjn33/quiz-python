@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}DevOps Quiz{% endblock %}
+{% block content %}
+  <h1>DevOps Quiz</h1>
+  <form method="POST" action="{{ url_for('results') }}">
+    {% for question in questions %}
+      <h2>{{ question['question'] }}</h2>
+      {% for option in question['options'] %}
+        <div>
+          <input type="radio" id="{{ option }}" name="{{ question['question'] }}" value="{{ option }}">
+          <label for="{{ option }}">{{ option }}</label>
+        </div>
+      {% endfor %}
+    {% endfor %}
+    <button type="submit" class="btn">Submit</button>
+  </form>
+{% endblock %}

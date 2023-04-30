@@ -1,0 +1,44 @@
+nav {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+  
+  nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav li {
+    margin-right: 1rem;
+  }
+  
+  nav a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  main {
+    margin: 2rem;
+  }
+  
+  h1, h2 {
+    margin-top: 2rem;
+  }
+  
+  .btn {
+    background-color: #333;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 1rem;
+  }
+  
+  .btn:hover {
+    background-color: #555;
+  }
+  
