@@ -1,42 +1,56 @@
-// Get the form element
-const quizForm = document.querySelector('form');
+const form = document.querySelector('form');
+const resultContainer = document.querySelector('#result-container');
+console.log(resultContainer);
 
-// Attach an event listener to the form submission
-quizForm.addEventListener('submit', (event) => {
-  event.preventDefault(); // Prevent the default form submission behavior
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-  // Get the user's answers from the form
-  const formData = new FormData(quizForm);
-  const userAnswers = {};
-  for (const [question, answer] of formData) {
-    userAnswers[question] = answer;
+  const formData = new FormData(form);
+  const data = {};
+
+  for (const [key, value] of formData.entries()) {
+    data[key] = value;
   }
 
-  // Send an AJAX request to the server to get the quiz results
   fetch('/results', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(userAnswers)
+    body: JSON.stringify(data)
   })
-  .then(response => response.json())
-  .then(data => {
-    // Update the results page with the user's score and feedback
-    const resultsSection = document.querySelector('#results');
-    resultsSection.innerHTML = `
-      <p>You scored ${data.score} out of ${data.num_questions}.</p>
-      <p>Your proficiency level is ${data.proficiency}.</p>
-      <h2>Feedback</h2>
-      <ul>
-        ${Object.entries(data.results).map(([question, result]) => `<li>${question}: ${result}</li>`).join('')}
-      </ul>
-    `;
-    resultsSection.classList.remove('hidden');
+  
+  .then(response => response.text())
+  .then(response => {
+    console.log(response);
+    resultContainer.innerHTML = response;
   })
+
+//  .then(response => response.json())
+//  .then(response => {
+//    console.log(response);
+
+//    // Display the results on the page
+//    if (resultContainer) {
+//      resultContainer.innerHTML = `
+//        <p>Score: ${response.score.toFixed(1)} / ${response.num_questions}</p>
+//        <p>Proficiency: ${response.proficiency}</p>
+//        <ul>
+//          ${Object.keys(response.results).map(question => `
+//            <li>
+//              ${question}: ${response.results[question]}
+//            </li>
+//          `).join('')}
+//        </ul>
+//      `;
+//    }
+//  })
   .catch(error => {
     console.error(error);
-    alert('An error occurred while submitting your quiz. Please try again later.');
+    // Display an error message on the page
+    if (resultContainer) {
+      resultContainer.innerHTML = '<p>An error occurred while submitting your quiz. Please try again later.</p>';
+    }
   });
 });
 

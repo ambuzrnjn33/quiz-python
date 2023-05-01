@@ -1,14 +1,21 @@
-{% extends "base.html" %}
-{% block title %}Quiz Results{% endblock %}
-{% block content %}
-  <h1>Quiz Results</h1>
-  <p>You scored {{ score }} out of {{ num_questions }}.</p>
-  <p>Your proficiency level is {{ proficiency }}.</p>
-  <h2>Feedback</h2>
-  <ul>
-    {% for question, result in results.items() %}
-      <li>{{ question }}: {{ result }}</li>
-    {% endfor %}
-  </ul>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quiz Results</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+    <h1>Quiz Results</h1>
+    <p>You scored {{ score }} out of {{ num_questions }}.</p>
+    <p>Your proficiency level is {{ proficiency }}.</p>
+    <h2>Feedback</h2>
+    <ul>
+      {% for question, result in results.items() %}
+        <li>{{ question }}: {{ result }}</li>
+      {% endfor %}
+    </ul>
+    <div id="result-container"></div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>
 
